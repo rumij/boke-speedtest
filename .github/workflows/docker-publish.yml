@@ -40,7 +40,7 @@ jobs:
           docker build --label "org.opencontainers.image.source=$SOURCE_URL" --label "org.opencontainers.image.revision=$REVISION" -t boke-speedtest:ci .
       - name: Start isolated test container
         run: |
-          docker run -d --name boke-speedtest-ci -p 127.0.0.1:18090:8080 boke-speedtest:ci
+          docker run -d --name boke-speedtest-ci -e BOKE_THEME_SYNC=false -p 127.0.0.1:18090:8080 boke-speedtest:ci
           for attempt in $(seq 1 60); do
             if curl -fsS http://127.0.0.1:18090/index-modern.html >/dev/null; then exit 0; fi
             sleep 2
@@ -52,7 +52,12 @@ jobs:
           npm ci
           npx playwright install --with-deps chromium
       - name: Test packaged application
-        run: npm run test:release
+        run: |
+          docker exec boke-speedtest-ci mkdir -p /speedtest/tests
+          docker cp tests/theme-source.php boke-speedtest-ci:/speedtest/tests/theme-source.php
+          docker exec boke-speedtest-ci php /speedtest/tests/theme-source.php
+          npm run test:release
+          npm run test:theme
       - name: Container logs and cleanup
         if: always()
         run: |

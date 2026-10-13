@@ -10,6 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let pausedByUser = false;
   let previousState = null;
+  const bundledVideo = video.dataset.src;
 
   function stopBackground() {
     video.pause();
@@ -26,7 +27,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Stop media requests before the speed test's click handler launches its worker.
   startButton.addEventListener("click", () => {
-    if (testState.state === READY || testState.state === FINISHED) stopBackground();
+    if (testState.state === READY || testState.state === FINISHED) {
+      window.BokeTheme?.setRunning(true);
+      stopBackground();
+    }
   }, { capture: true });
 
   motionToggle.addEventListener("click", () => {
@@ -39,6 +43,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function syncState() {
     const running = testState.state === RUNNING;
+    window.BokeTheme?.setRunning(running);
     document.body.classList.toggle("test-running", running);
     motionToggle.disabled = running || reducedMotion.matches;
     chosen.disabled = running || selector.classList.contains("single-server") || testState.state === INITIALIZING;
@@ -73,6 +78,14 @@ window.addEventListener("DOMContentLoaded", () => {
   reducedMotion.addEventListener("change", () => {
     if (reducedMotion.matches) stopBackground(); else playBackground();
     syncState();
+  });
+  window.addEventListener("boke:video-changed", () => { stopBackground(); playBackground(); });
+  video.addEventListener("error", () => {
+    if (video.dataset.src !== bundledVideo) {
+      video.dataset.src = bundledVideo;
+      stopBackground();
+      playBackground();
+    }
   });
   syncState();
 });

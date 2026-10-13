@@ -7,8 +7,9 @@
   <meta name="description" content="持续观察延迟、抖动和请求失败率，了解连接的稳定性。" />
   <link rel="icon" href="favicon.ico?v=20261013-boke" type="image/x-icon" />
   <link rel="apple-touch-icon" href="frontend/images/boke/touch-icon.png" />
-  <link rel="stylesheet" href="frontend/styling/boke.css?v=20261013-brand" />
-  <link rel="stylesheet" href="frontend/styling/stability.css?v=20261013-brand" />
+  <link rel="stylesheet" href="frontend/styling/boke.css?v=1.1.0" />
+  <link rel="stylesheet" href="frontend/styling/stability.css?v=1.1.0" />
+  <script src="frontend/javascript/theme-sync.js?v=1.1.0" defer></script>
   <title>波克 · 稳定性测试</title>
 </head>
 <body class="stability-page">
@@ -253,6 +254,7 @@
         resetUI();
 
         running = true;
+        window.BokeTheme?.setRunning(true);
         I("startBtn").className = "running";
         I("startBtn").setAttribute("aria-disabled", "false");
         I("startBtn").disabled = false;
@@ -303,6 +305,7 @@
 
       function stopTest() {
         running = false;
+        window.BokeTheme?.setRunning(false);
         I("startBtn").className = "";
         I("durationSelect").disabled = false;
         I("targetSelect").disabled = false;

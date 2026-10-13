@@ -11,6 +11,7 @@ assert.ok(['127.0.0.1', 'localhost', '[::1]'].includes(base.hostname), 'Release 
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.route('**/*', route => new URL(route.request().url()).origin === base.origin ? route.continue() : route.abort());
+    await page.route('**/frontend/theme.php', route => route.fulfill({ json: { enabled: false } }));
     for (const path of ['/backend/empty.php', '/favicon.ico', '/manifest.webmanifest', '/frontend/images/boke/logo.png', '/frontend/images/boke/hero-poster.jpg']) {
       const response = await page.request.get(new URL(path, base).href);
       assert.equal(response.status(), 200, path);

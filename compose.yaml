@@ -1,6 +1,6 @@
 services:
   speedtest:
-    image: ghcr.io/rumij/boke-speedtest:1.0.0
+    image: ghcr.io/rumij/boke-speedtest:1.1.0
     ports:
       - "127.0.0.1:18088:8080"
     environment:
@@ -8,4 +8,6 @@ services:
       USE_NEW_DESIGN: "true"
       TELEMETRY: "false"
       WEBPORT: "8080"
+      BOKE_THEME_SYNC: "true"
+      BOKE_THEME_INTERVAL: "300"
     restart: unless-stopped

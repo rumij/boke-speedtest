@@ -1,11 +1,11 @@
 /* Shared content width; golden split for the chart and controls. */
 .stability-page { position: relative; isolation: isolate; background: #193b35; }
-.stability-backdrop { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, #112b27bd, #0f2a26dc), url("../images/boke/hero-poster.jpg") center / cover no-repeat; }
+.stability-backdrop { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, #112b27bd, #0f2a26dc), var(--boke-poster, url("../images/boke/hero-poster.jpg")) center / cover no-repeat; }
 .stability-shell { width: min(90%, var(--content-width)); margin: 0 auto; padding: 155px 0 70px; }
 .stability-intro { color: #fff; margin-bottom: 32px; }
 .stability-intro .eyebrow { font-size: 12px; }
 .stability-intro h1 { font-size: clamp(32px, 3.5vw, 48px); line-height: 1.4; margin: 0 0 15px; letter-spacing: 1px; }
-.stability-intro h1 > span { color: #ff5549; }
+.stability-intro h1 > span { color: var(--brand-highlight); }
 .stability-intro > p:last-child { font-size: 18px; line-height: 1.8; margin: 0; }
 .stability-grid { display: grid; grid-template-columns: minmax(0, 1.618fr) minmax(0, 1fr); gap: 24px; align-items: stretch; }
 .stability-main, .stability-aside { background: #fff; color: var(--ink); border-radius: 16px; padding: 28px; min-width: 0; box-shadow: 0 15px 40px #061c2933; }
@@ -42,7 +42,7 @@
 .stability-actions { display: grid; grid-template-columns: minmax(0, 1.618fr) minmax(0, 1fr); gap: 12px; margin-top: 24px; }
 #startBtn, #resetBtn { min-width: 0; min-height: 52px; border: 0; border-radius: 7px; padding: 12px 8px; font-size: 17px; font-weight: 600; }
 #startBtn { color: #fff; background: var(--red); }
-#startBtn:hover:not(:disabled) { background: #bf1d18; }
+#startBtn:hover:not(:disabled) { background: color-mix(in srgb, var(--red), black 15%); }
 #startBtn::before { content: "开始测试"; }
 #startBtn.finding::before { content: "寻找节点…"; }
 #startBtn.disabled, #startBtn:disabled { background: #626b67; cursor: not-allowed; }
@@ -58,7 +58,7 @@
 #optionalControls > p { font-size: 13px; line-height: 1.8; color: var(--muted); margin: 8px 0 18px; }
 #downloadCsvBtn { width: 100%; border: 1px solid #cdd6d0; border-radius: 7px; background: #fff; color: var(--ink); padding: 12px 16px; font-size: 15px; text-align: left; }
 #downloadCsvBtn span { float: right; }
-#downloadCsvBtn:hover:not(:disabled) { border-color: var(--red); color: #b71e18; }
+#downloadCsvBtn:hover:not(:disabled) { border-color: var(--red); color: var(--brand-text); }
 #downloadCsvBtn:disabled { background: #f5f7f5; color: #616963; cursor: not-allowed; }
 .stability-tip { margin-top: 24px; padding: 18px; background: #f5f7f5; border-radius: 8px; }
 .stability-tip > span { font-size: 14px; font-weight: 600; }

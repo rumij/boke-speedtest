@@ -1,6 +1,6 @@
 {
   "name": "boke-speedtest",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Boke-themed LibreSpeed network speed and stability test",
   "main": "speedtest.js",
   "scripts": {
@@ -14,7 +14,8 @@
     "validate": "npm run format:check && npm run lint",
     "docker:build": "docker build -t librespeed-speedtest .",
     "docker:build-alpine": "docker build -t librespeed-speedtest:alpine -f Dockerfile.alpine .",
-    "test:release": "node tests/release-smoke.cjs"
+    "test:release": "node tests/release-smoke.cjs",
+    "test:theme": "node tests/theme-sync.cjs"
   },
   "repository": {
     "type": "git",
