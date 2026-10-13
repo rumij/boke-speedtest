@@ -1,0 +1,14 @@
+Reference website: https://www.boke.com/
+Assets retrieved 2026-10-13 for the requested local design preview.
+hero.mp4: https://png.pookcdn.net/new_net/myvideo.mp4
+hero-poster.jpg: https://png.pookcdn.net/new_net/video_start.jpg
+mascot.png: https://png.pookcdn.net/new_net/new_en/news_doll_04.png
+mascot-halo.png: https://png.pookcdn.net/new_net/new_en/bg_news_doll.png
+These are original Boke assets, not LibreSpeed project assets. Copyright remains
+with the respective rightsholders; no license is granted by this file.
+
+Brand assets retrieved 2026-10-13 from the same official site:
+logo.png: https://png.pookcdn.net/new_net/new_en/260316/logo.png
+Logo is rendered white by CSS for contrast over the dark hero; original pixels are unchanged.
+touch-icon.png: https://png.pookcdn.net/new_net/en/boke-logo.png
+../../../favicon.ico (project root): https://png.pookcdn.net/puic-net/net/share/h5/company/v5/favicon.ico

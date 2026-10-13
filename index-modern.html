@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="boke">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="让连接更畅快。测试下载、上传、延迟与抖动，了解你的网络表现。" />
+  <meta name="theme-color" content="#e52420" />
+  <link rel="icon" href="favicon.ico?v=20261013-boke" type="image/x-icon" />
+  <link rel="manifest" href="manifest.webmanifest?v=20261013-boke" />
+  <link rel="apple-touch-icon" href="frontend/images/boke/touch-icon.png" />
+  <link rel="stylesheet" href="frontend/styling/boke.css?v=20261013-brand" />
+  <script src="speedtest.js" defer></script>
+  <script>var SPEEDTEST_SERVERS = "server-list.json";</script>
+  <script src="frontend/javascript/index.js?v=20261013-zero" defer></script>
+  <script src="frontend/javascript/boke.js?v=20261013-dials" defer></script>
+  <title>波克 · 网络测速</title>
+</head>
+<body class="home-page">
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="波克网络测速首页">
+      <img class="boke-logo" src="frontend/images/boke/logo.png" width="220" height="52" alt="波克 BOKE" />
+    </a>
+    <nav aria-label="主导航">
+      <a class="nav-current" href="#speedtest" aria-current="page">网络测速</a>
+      <a href="stability.html">稳定性测试 <span aria-hidden="true">↗</span></a>
+      <a href="#guide">测速指南</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="speedtest" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <video id="hero-video" muted loop playsinline preload="none" poster="frontend/images/boke/hero-poster.jpg" data-src="frontend/images/boke/hero.mp4"></video>
+      </div>
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> BOKE / NETWORK EXPERIENCE</p>
+          <h1 id="hero-title"><span>BE FAST.</span> <span>BE FREE<span class="red-dot">.</span></span></h1>
+          <h2>让每一次连接，<br class="mobile-break" />都尽兴。</h2>
+          <p class="hero-description">精彩不必等待。<br />从一次测速开始，发现你的网络实力。</p>
+          <a href="#guide" class="hero-link">了解你的连接 <span aria-hidden="true">↓</span></a>
+        </div>
+        <section class="test-panel" aria-labelledby="test-title">
+          <div class="panel-heading"><div><p class="panel-kicker">READY. SET. GO.</p><h2 id="test-title">探索你的网速</h2></div><span class="panel-symbol" aria-hidden="true">↗</span></div>
+          <div class="server-selector">
+            <button type="button" class="chosen" aria-expanded="false" aria-controls="server-options">
+              <span class="server-label">测速节点</span>
+              <span id="selected-server">正在寻找测速节点…</span>
+              <span class="chevron" aria-hidden="true">⌄</span>
+            </button>
+            <ul class="servers" id="server-options"></ul>
+            <p class="sponsor" id="sponsor">&nbsp;</p>
+          </div>
+          <div class="gauge-layout" aria-label="测速结果。仪表盘采用对数刻度，上限 10 Gbps；准确速率请以数字为准。">
+            <div class="gauge download" id="download-gauge">
+              <h3><span class="direction-icon" aria-hidden="true">↓</span>下载速度<small>DOWNLOAD</small></h3>
+              <div class="dial">
+                <svg class="speed" viewBox="0 0 240 208" aria-hidden="true">
+                  <g class="dial-ticks"><path d="M47.17 182.83 L42.22 187.78"/><path d="M33.55 171.34 L30.29 173.65"/><path d="M24.50 155.99 L20.89 157.73"/><path d="M18.14 139.34 L14.30 140.45"/><path d="M14.67 121.87 L10.69 122.32"/><path d="M14.17 104.06 L10.17 103.83"/><path d="M16.66 86.41 L12.76 85.52"/><path d="M24.84 70.58 L18.37 67.90"/><path d="M30.25 53.60 L26.86 51.48"/><path d="M40.96 39.37 L37.98 36.70"/><path d="M53.91 27.13 L51.42 24.00"/><path d="M68.73 17.23 L66.79 13.73"/><path d="M84.99 9.95 L83.67 6.17"/><path d="M102.24 5.50 L101.57 1.55"/><path d="M120.00 7.00 L120.00 0.00"/><path d="M137.76 5.50 L138.43 1.55"/><path d="M155.01 9.95 L156.33 6.17"/><path d="M171.27 17.23 L173.21 13.73"/><path d="M186.09 27.13 L188.58 24.00"/><path d="M199.04 39.37 L202.02 36.70"/><path d="M209.75 53.60 L213.14 51.48"/><path d="M215.16 70.58 L221.63 67.90"/><path d="M223.34 86.41 L227.24 85.52"/><path d="M225.83 104.06 L229.83 103.83"/><path d="M225.33 121.87 L229.31 122.32"/><path d="M221.86 139.34 L225.70 140.45"/><path d="M215.50 155.99 L219.11 157.73"/><path d="M206.45 171.34 L209.71 173.65"/><path d="M192.83 182.83 L197.78 187.78"/></g>
+                  <path class="dial-track" d="M56.36 173.64 A90 90 0 1 1 183.64 173.64"/>
+                  <path class="dial-fill" pathLength="100" d="M56.36 173.64 A90 90 0 1 1 183.64 173.64"/>
+                  <text class="dial-scale" x="41" y="202">0</text><text class="dial-scale" x="199" y="202">10G</text>
+                </svg>
+                <p class="dial-reading"><span id="download-speed">0.00</span><em>Mbps</em><small class="measurement-state">等待测速</small></p>
+              </div>
+              <div class="progress" aria-hidden="true"></div>
+            </div>
+            <div class="gauge upload" id="upload-gauge">
+              <h3><span class="direction-icon" aria-hidden="true">↑</span>上传速度<small>UPLOAD</small></h3>
+              <div class="dial">
+                <svg class="speed" viewBox="0 0 240 208" aria-hidden="true">
+                  <g class="dial-ticks"><path d="M47.17 182.83 L42.22 187.78"/><path d="M33.55 171.34 L30.29 173.65"/><path d="M24.50 155.99 L20.89 157.73"/><path d="M18.14 139.34 L14.30 140.45"/><path d="M14.67 121.87 L10.69 122.32"/><path d="M14.17 104.06 L10.17 103.83"/><path d="M16.66 86.41 L12.76 85.52"/><path d="M24.84 70.58 L18.37 67.90"/><path d="M30.25 53.60 L26.86 51.48"/><path d="M40.96 39.37 L37.98 36.70"/><path d="M53.91 27.13 L51.42 24.00"/><path d="M68.73 17.23 L66.79 13.73"/><path d="M84.99 9.95 L83.67 6.17"/><path d="M102.24 5.50 L101.57 1.55"/><path d="M120.00 7.00 L120.00 0.00"/><path d="M137.76 5.50 L138.43 1.55"/><path d="M155.01 9.95 L156.33 6.17"/><path d="M171.27 17.23 L173.21 13.73"/><path d="M186.09 27.13 L188.58 24.00"/><path d="M199.04 39.37 L202.02 36.70"/><path d="M209.75 53.60 L213.14 51.48"/><path d="M215.16 70.58 L221.63 67.90"/><path d="M223.34 86.41 L227.24 85.52"/><path d="M225.83 104.06 L229.83 103.83"/><path d="M225.33 121.87 L229.31 122.32"/><path d="M221.86 139.34 L225.70 140.45"/><path d="M215.50 155.99 L219.11 157.73"/><path d="M206.45 171.34 L209.71 173.65"/><path d="M192.83 182.83 L197.78 187.78"/></g>
+                  <path class="dial-track" d="M56.36 173.64 A90 90 0 1 1 183.64 173.64"/>
+                  <path class="dial-fill" pathLength="100" d="M56.36 173.64 A90 90 0 1 1 183.64 173.64"/>
+                  <text class="dial-scale" x="41" y="202">0</text><text class="dial-scale" x="199" y="202">10G</text>
+                </svg>
+                <p class="dial-reading"><span id="upload-speed">0.00</span><em>Mbps</em><small class="measurement-state">等待测速</small></p>
+              </div>
+              <div class="progress" aria-hidden="true"></div>
+            </div>
+            <div class="ping hidden latency-metric"><h3>网络延迟 <small>PING</small></h3><p><span class="value" id="ping">0.00</span><em>ms</em></p></div>
+            <div class="jitter hidden latency-metric"><h3>网络抖动 <small>JITTER</small></h3><p><span class="value" id="jitter">0.00</span><em>ms</em></p></div>
+          </div>
+          <p class="scale-note">仪表盘为对数刻度 · 数字显示实际速率</p>
+          <button class="disabled" id="start-button" type="button" disabled>准备中…</button>
+          <div class="test-status" role="status"><span class="status-dot"></span><span id="test-status-text">正在准备测速</span><button id="motion-toggle" type="button" aria-pressed="false" aria-label="暂停背景动画">Ⅱ</button></div>
+          <p class="panel-note">下载 · 上传 · 延迟 · 抖动，一次了解</p>
+          <p id="privacy-warning" class="hidden">开始测速即表示同意隐私政策。<a href="#" id="choose-privacy">查看隐私选项</a></p>
+          <button class="small inverted hidden" id="share-results" type="button">分享测速结果</button>
+        </section>
+      </div>
+      <div class="hero-bottom"><span>MAKE EVERY CONNECTION COUNT.</span><a href="#guide" aria-label="向下查看测速指南">SCROLL TO EXPLORE <span>↓</span></a><span class="hero-index">01 / 02</span></div>
+    </section>
+    <section class="guide" id="guide" aria-labelledby="guide-title">
+      <div class="guide-art"><img class="mascot-halo" src="frontend/images/boke/mascot-halo.png" alt="" loading="lazy" /><img class="mascot" src="frontend/images/boke/mascot.png" alt="色彩明快的游戏角色插画" loading="lazy" /><span class="art-caption">PLAY MORE. WAIT LESS.</span></div>
+      <div class="guide-copy"><p class="section-kicker">BETTER CONNECTION. MORE POSSIBILITIES.</p><h2 id="guide-title">热爱畅快，<br />也关心每一次连接<span>。</span></h2><p class="guide-intro">无论游戏、视频，还是日常工作，<br />了解你的网络，让精彩持续在线。</p>
+        <div class="guide-tips"><article><span>01</span><div><h3>给测速留一点空间</h3><p>暂停下载、云同步和视频播放，让结果更贴近当前可用带宽。</p></div></article><article><span>02</span><div><h3>在同样的条件下比较</h3><p>选择相同节点与连接方式，分时段重复测速，观察网络变化。</p></div></article></div>
+        <a class="stability-link" href="stability.html">继续探索连接稳定性 <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+  <dialog id="share">
+    <div class="close-dialog">
+      <img src="frontend/images/close-button.svg" alt="关闭" />
+    </div>
+    <img id="results" src="" alt="Test results in graphical form" />
+    <button id="copy-link">复制链接</button>
+  </dialog>
+
+  <dialog id="privacy">
+    <div class="close-dialog">
+      <img src="frontend/images/close-button.svg" alt="关闭" />
+    </div>
+    <section>
+      <h1>Privacy Policy</h1>
+      <p>
+        This HTML5 speed test server is configured with telemetry enabled.
+      </p>
+
+      <h2>What data we collect</h2>
+      <p>
+        At the end of the test, the following data is collected and stored:
+      </p>
+
+      <ul>
+        <li>Test ID</li>
+        <li>Time of testing</li>
+        <li>Test results (download and upload speed, ping and jitter)</li>
+        <li>IP address</li>
+        <li>ISP information</li>
+        <li>Approximate location (inferred from IP address, not GPS)</li>
+        <li>User agent and browser locale</li>
+        <li>Test log (contains no personal information)</li>
+      </ul>
+
+      <h2>How we use the data</h2>
+      <p>Data collected through this service is used to:</p>
+
+      <ul>
+        <li>
+          Allow sharing of test results (sharable image for forums, etc.)
+        </li>
+        <li>
+          To improve the service offered to you (for instance, to detect
+          problems on our side)
+        </li>
+      </ul>
+
+      <p>No personal information is disclosed to third parties.</p>
+
+      <h2>Your consent</h2>
+      <p>
+        By starting the test, you consent to the terms of this privacy policy.
+      </p>
+
+      <h2>Data removal</h2>
+      <p>
+        If you want to have your information deleted, you need to provide
+        either the ID of the test or your IP address. This is the only way to
+        identify your data, without this information we won't be able to
+        comply with your request.
+      </p>
+      <p>
+        Contact this email address for all deletion requests:
+        <a href="mailto:PUT@YOUR_EMAIL.HERE">TO BE FILLED BY DEVELOPER</a>.
+      </p>
+    </section>
+    <button id="close-privacy">Close</button>
+  </dialog>
+</body>
+</html>
