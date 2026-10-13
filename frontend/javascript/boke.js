@@ -20,7 +20,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function playBackground() {
-    if (pausedByUser || reducedMotion.matches || document.hidden || testState.state === RUNNING) return;
+    if (pausedByUser || reducedMotion.matches || document.hidden || testState.state === RUNNING || window.BokeTheme?.busy) return;
     if (!video.hasAttribute("src")) video.src = video.dataset.src;
     video.play().catch(() => {}); // Static poster remains available if autoplay fails.
   }
@@ -45,7 +45,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const running = testState.state === RUNNING;
     window.BokeTheme?.setRunning(running);
     document.body.classList.toggle("test-running", running);
-    motionToggle.disabled = running || reducedMotion.matches;
+    motionToggle.disabled = running || reducedMotion.matches || window.BokeTheme?.busy;
     chosen.disabled = running || selector.classList.contains("single-server") || testState.state === INITIALIZING;
     chosen.setAttribute("aria-expanded", String(servers.classList.contains("active") && !running));
     if (running && servers.classList.contains("active")) servers.classList.remove("active");
@@ -80,6 +80,10 @@ window.addEventListener("DOMContentLoaded", () => {
     syncState();
   });
   window.addEventListener("boke:video-changed", () => { stopBackground(); playBackground(); });
+  window.addEventListener("boke:quality-state", () => {
+    motionToggle.disabled = reducedMotion.matches || window.BokeTheme?.busy;
+    if (window.BokeTheme?.busy) stopBackground(); else playBackground();
+  });
   video.addEventListener("error", () => {
     if (video.dataset.src !== bundledVideo) {
       video.dataset.src = bundledVideo;

@@ -58,6 +58,7 @@ jobs:
           docker exec boke-speedtest-ci php /speedtest/tests/theme-source.php
           npm run test:release
           npm run test:theme
+          npm run test:website
       - name: Container logs and cleanup
         if: always()
         run: |

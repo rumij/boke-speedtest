@@ -4,13 +4,14 @@
   const applied = new Map();
   const blobs = new Map();
   let running = false;
+  let qualityRunning = false;
   let enabled = true;
   let interval = 300000;
   let timer;
   let controller;
   let due = 0;
 
-  const idle = () => !running && !document.hidden;
+  const idle = () => !running && !qualityRunning && !document.hidden;
   function schedule() {
     clearTimeout(timer);
     if (enabled && idle()) timer = setTimeout(sync, Math.max(1000, due - Date.now()));
@@ -20,10 +21,18 @@
     controller?.abort();
   }
   window.BokeTheme = {
+    get busy() { return running || qualityRunning; },
     setRunning(value) {
       if (running === value) return;
       running = value;
       if (running) suspend(); else schedule();
+      window.dispatchEvent(new CustomEvent('boke:measurement', { detail: { running } }));
+    },
+    setQualityRunning(value) {
+      if (qualityRunning === value) return;
+      qualityRunning = value;
+      if (qualityRunning) suspend(); else schedule();
+      window.dispatchEvent(new CustomEvent('boke:quality-state', { detail: { running: qualityRunning } }));
     },
   };
 
@@ -139,7 +148,7 @@
     finally {
       clearTimeout(timeout);
       controller = null;
-      if (current.signal.aborted && running) due = 0;
+      if (current.signal.aborted && (running || qualityRunning)) due = 0;
       schedule();
     }
   }

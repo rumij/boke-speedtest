@@ -39,6 +39,8 @@ const rectangles = page => page.evaluate(() => [...document.querySelectorAll('.s
         await page.goto(new URL(file, base).href);
         await page.waitForFunction(() => document.querySelector('#startBtn') ? !document.querySelector('#startBtn').disabled : testState.state === READY);
         await page.waitForFunction(() => document.querySelector('.boke-logo').complete);
+        // Capture geometry after the automatic result cards settle, before applying the theme.
+        if (file === 'index-modern.html') await page.waitForFunction(() => document.querySelector('#website-quality').dataset.state === 'finished');
         const before = await rectangles(page);
         while (!releaseManifest) await page.waitForTimeout(50);
         releaseManifest();
@@ -86,6 +88,7 @@ const rectangles = page => page.evaluate(() => [...document.querySelectorAll('.s
     await page.close();
     // Failed CDN images and a broken movie keep readable, bundled fallbacks.
     const fallback = await browser.newPage();
+    await fallback.route('**/*', route => new URL(route.request().url()).origin === base.origin ? route.continue() : route.abort());
     await fallback.route('**/frontend/theme.php', route => route.fulfill({ json: { enabled: true, interval: 300, theme } }));
     await fallback.route('https://png.pookcdn.net/**', route => route.abort());
     await fallback.goto(new URL('index-modern.html', base).href);

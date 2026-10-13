@@ -12,8 +12,10 @@
   <script src="speedtest.js" defer></script>
   <script>var SPEEDTEST_SERVERS = "server-list.json";</script>
   <script src="frontend/javascript/index.js?v=20261013-zero" defer></script>
-  <script src="frontend/javascript/boke.js?v=1.1.0" defer></script>
-  <script src="frontend/javascript/theme-sync.js?v=1.1.0" defer></script>
+  <script src="frontend/javascript/boke.js?v=1.2.0" defer></script>
+  <script src="frontend/javascript/theme-sync.js?v=1.2.0" defer></script>
+  <link rel="stylesheet" href="frontend/styling/website-quality.css?v=1.2.0" />
+  <script src="frontend/javascript/website-quality.js?v=1.2.0" defer></script>
   <title>波克 · 网络测速</title>
 </head>
 <body class="home-page">
@@ -90,7 +92,35 @@
           <button class="small inverted hidden" id="share-results" type="button">分享测速结果</button>
         </section>
       </div>
-      <div class="hero-bottom"><span>MAKE EVERY CONNECTION COUNT.</span><a href="#guide" aria-label="向下查看测速指南">SCROLL TO EXPLORE <span>↓</span></a><span class="hero-index">01 / 02</span></div>
+      <div class="hero-bottom"><span>MAKE EVERY CONNECTION COUNT.</span><a href="#website-quality" aria-label="向下查看网站访问质量">SCROLL TO EXPLORE <span>↓</span></a><span class="hero-index">01 / 02</span></div>
+    </section>
+    <section class="website-quality" id="website-quality" aria-labelledby="quality-title" data-state="waiting">
+      <div class="quality-heading"><div><p class="section-kicker">WEBSITE CHECK / 从此设备出发</p><h2 id="quality-title">常用网站，连接怎么样？</h2><p>打开页面自动检测一轮，查看当前设备访问百度和 DeepSeek 官网的响应表现。</p></div><button id="quality-recheck" type="button">立即检测</button></div>
+      <div class="quality-cards">
+        <article class="quality-card" data-website="baidu" data-url="https://www.baidu.com/" data-state="waiting">
+          <div class="quality-card-header"><span class="quality-monogram" aria-hidden="true">B</span><div><h3>百度</h3><span class="quality-domain">www.baidu.com</span></div><span class="quality-state" data-quality="state">等待检测</span></div>
+          <dl class="quality-metrics">
+            <div><dt>请求耗时 · 中位数</dt><dd data-quality="duration">待检测</dd></div>
+            <div><dt>耗时波动</dt><dd data-quality="variation">待检测</dd></div>
+            <div><dt>收到响应 / 已尝试</dt><dd data-quality="responses">0 / 0</dd></div>
+            <div><dt>未完成的请求</dt><dd class="quality-failures">超时 <span data-quality="timeouts">0</span> 次 · 其他 <span data-quality="failures">0</span> 次</dd></div>
+          </dl>
+          <p class="quality-card-note">只测本机到官网的 HTTP 请求，不代表搜索功能可用。</p>
+        </article>
+        <article class="quality-card" data-website="deepseek" data-url="https://www.deepseek.com/" data-state="waiting">
+          <div class="quality-card-header"><span class="quality-monogram" aria-hidden="true">D</span><div><h3>DeepSeek 官网</h3><span class="quality-domain">www.deepseek.com</span></div><span class="quality-state" data-quality="state">等待检测</span></div>
+          <dl class="quality-metrics">
+            <div><dt>请求耗时 · 中位数</dt><dd data-quality="duration">待检测</dd></div>
+            <div><dt>耗时波动</dt><dd data-quality="variation">待检测</dd></div>
+            <div><dt>收到响应 / 已尝试</dt><dd data-quality="responses">0 / 0</dd></div>
+            <div><dt>未完成的请求</dt><dd class="quality-failures">超时 <span data-quality="timeouts">0</span> 次 · 其他 <span data-quality="failures">0</span> 次</dd></div>
+          </dl>
+          <p class="quality-card-note">只测本机到官网的 HTTP 请求，不代表聊天或 API 服务可用。</p>
+        </article>
+      </div>
+      <p id="quality-summary" role="status" aria-live="polite">即将检测 · 开始网络测速时会暂停本项检测。</p>
+      <details class="quality-explainer"><summary>这些结果说明什么？</summary><p>每站发送 3 次小型 HEAD 请求，单次超时为 4 秒。请求耗时包含可能发生的 DNS 解析、连接建立和服务器响应，受连接复用及 CDN 影响；它不是 Ping、页面完整加载时间或带宽。耗时波动为收到响应样本的最大值减最小值。</p><p>跨域限制使网页通常无法读取状态码；403、验证码或错误页面也可能被记录为“收到响应”。超时或未完成可能与网络、网站策略或浏览器限制有关，不能直接判定网站故障。检测由此设备直接发起，不经测速服务器转发，不携带目标站点登录信息，不保存检测历史。</p></details>
+      <noscript><p>请启用 JavaScript 后使用网站访问质量检测。</p></noscript>
     </section>
     <section class="guide" id="guide" aria-labelledby="guide-title">
       <div class="guide-art"><img class="mascot-halo" src="frontend/images/boke/mascot-halo.png" alt="" loading="lazy" /><img class="mascot" src="frontend/images/boke/mascot.png" alt="色彩明快的游戏角色插画" loading="lazy" /><span class="art-caption">PLAY MORE. WAIT LESS.</span></div>

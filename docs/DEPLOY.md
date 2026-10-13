@@ -6,7 +6,7 @@
 | --- | --- |
 | 源码 | https://github.com/rumij/boke-speedtest |
 | GitHub Container Registry | https://github.com/rumij/boke-speedtest/pkgs/container/boke-speedtest |
-| 固定版本镜像 | `ghcr.io/rumij/boke-speedtest:1.1.0` |
+| 固定版本镜像 | `ghcr.io/rumij/boke-speedtest:1.2.0` |
 | 最新稳定版 | `ghcr.io/rumij/boke-speedtest:latest` |
 | 开发版 | `ghcr.io/rumij/boke-speedtest:edge` |
 | 容器平台 | `linux/amd64`（Intel/AMD 64 位） |
@@ -16,7 +16,7 @@
 ## Docker 一条命令启动
 
 ```bash
-docker run -d --name boke-speedtest --restart unless-stopped -p 127.0.0.1:18088:8080 ghcr.io/rumij/boke-speedtest:1.1.0
+docker run -d --name boke-speedtest --restart unless-stopped -p 127.0.0.1:18088:8080 ghcr.io/rumij/boke-speedtest:1.2.0
 ```
 
 访问 `http://localhost:18088/`；稳定性测试为 `http://localhost:18088/stability.html`。Docker Desktop 请切换为 Linux 容器。
@@ -49,7 +49,7 @@ docker compose down
 
 | 设置 | 值 |
 | --- | --- |
-| 镜像 | `ghcr.io/rumij/boke-speedtest:1.1.0` |
+| 镜像 | `ghcr.io/rumij/boke-speedtest:1.2.0` |
 | 宿主机端口 | `18088` 或其他空闲端口 |
 | 容器端口 | `8080/TCP` |
 | 重启策略 | `unless-stopped` |
@@ -96,7 +96,25 @@ curl -fsS http://127.0.0.1:80/frontend/theme.php
 
 按实际端口修改上面的 `80`。`status` 为 `synced` 表示最近检查成功，`cached` 表示保留上次配置，`fallback` 表示使用内置素材；`enabled: false` 表示管理员关闭同步。该接口仅返回素材配置，不接受自定义抓取地址。
 
-已部署 `1.0.0` 的用户需要先升级镜像至 `1.1.0` 并重建容器，之后素材更新无需重复打包。保留现有端口和其他 Compose 设置，只修改 `image`。请访问 `/index-modern.html`；`/index-classic.html` 是上游经典界面，不参与同步。
+已部署 `1.0.0` 的用户需要先升级镜像至当前稳定版 `1.2.0` 并重建容器，之后素材更新无需重复打包。保留现有端口和其他 Compose 设置，只修改 `image`。请访问 `/index-modern.html`；`/index-classic.html` 是上游经典界面，不参与同步。
+
+## 访问者到其他网站的检测（1.2.0 起）
+
+打开 `/index-modern.html` 后，页面下方“常用网站，连接怎么样？”会自动测一轮百度（`www.baidu.com`）和 DeepSeek 官网（`www.deepseek.com`）。检测由**访问者当前电脑/手机的浏览器直接发起**，不是容器服务器代测；无需新增后端服务、证书或端口。经典页面不包含该功能。
+
+- 每站 3 次 HEAD 请求，间隔至少 800 毫秒，单次超时 4 秒；最多两个请求同时进行。自动只运行一轮，也可以停止或手动重新检测。
+- 请求不携带目标站点登录 Cookie，不发送来源页面 Referer，不下载完整网页，不将结果上传保存。
+- 展示请求耗时中位数、成功收到响应样本的最大/最小差值、收到响应次数、超时次数及其他未完成次数。停止或切到后台取消的请求不计为失败。
+- 检测时暂停本页背景视频与官网主题同步；开始下载/上传测速时立即取消网站请求。测速完成后可手动重新检测。其他程序、标签页和用户的流量仍可能影响结果。
+- 此耗时含可能发生的 DNS、TCP/TLS 建连和服务器响应，受连接复用、浏览器、CDN 和网站处理逻辑影响。它不是 ICMP Ping、纯网络往返延迟、完整页面加载速度或带宽；两个网站的数字也不宜直接当作服务器性能排名。
+- 跨域 `no-cors` 响应通常不暴露 HTTP 状态码和正文。即便收到 403、验证码、500 或错误页面，也可能显示“收到响应”，这不代表搜索功能、DeepSeek 聊天或 API 正常。网络错误、浏览器/网站策略导致的未完成也不等于站点宕机。
+- 默认检测站点在 `index-modern.html` 的 `data-url` 中定义，只配置公开 HTTPS 网站。这里没有提供任意地址的服务端代理，也不需要 DeepSeek API Key。
+
+浏览器边界参考：[MDN Request mode](https://developer.mozilla.org/en-US/docs/Web/API/Request/mode)、[Timing-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Timing-Allow-Origin)。
+
+## 已有证书部署 HTTPS
+
+使用 [Nginx HTTPS 部署样例](../deploy/https/README.md)：Nginx 接管 80/443，将流量转发到内部 `speedtest:8080`，已有证书和私钥只读挂载；测速镜像无需为证书重新构建。
 
 ## 更新与回退
 
@@ -112,7 +130,7 @@ docker compose up -d
 查询本地拉取的镜像摘要：
 
 ```bash
-docker image inspect ghcr.io/rumij/boke-speedtest:1.1.0 --format '{{json .RepoDigests}}'
+docker image inspect ghcr.io/rumij/boke-speedtest:1.2.0 --format '{{json .RepoDigests}}'
 ```
 
 也可以把 `image` 改为 `ghcr.io/rumij/boke-speedtest@sha256:实际摘要` 来锁定构建产物。
@@ -142,6 +160,7 @@ npm ci
 npx playwright install chromium
 npm run test:release
 npm run test:theme
+npm run test:website
 docker rm -f boke-speedtest-check
 ```
 
