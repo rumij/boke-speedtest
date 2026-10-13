@@ -1,118 +1,46 @@
-![LibreSpeed Logo](https://github.com/librespeed/speedtest/blob/master/.logo/logo3.png?raw=true)
+# 波克风格网络测速 · Boke Speedtest
 
-# LibreSpeed
+基于 LibreSpeed 的网络测速与稳定性测试页面，提供波克风格背景、品牌图标、双测速仪表盘和适配手机的布局。
 
-No Flash, No Java, No Websocket, No Bullshit.
+- 下载、上传、延迟、抖动测试；初始读数为 `0.00`。
+- 稳定性测试、延迟曲线和 CSV 导出。
+- 测速期间自动暂停背景视频，减少背景资源对测量的影响。
+- 默认使用部署服务器作为测速节点，关闭遥测，无需数据库。
 
-This is a very lightweight speed test implemented in Javascript, using XMLHttpRequest and Web Workers.
+## 直接使用发布镜像
 
-## Try it
+公开镜像：[`ghcr.io/rumij/boke-speedtest`](https://github.com/rumij/boke-speedtest/pkgs/container/boke-speedtest)
 
-[Take a speed test](https://librespeed.org)
+```bash
+docker run -d --name boke-speedtest --restart unless-stopped -p 127.0.0.1:18088:8080 ghcr.io/rumij/boke-speedtest:1.0.0
+```
 
-## Compatibility
+打开 [http://localhost:18088](http://localhost:18088)。稳定性测试位于 `/stability.html`。
 
-All modern browsers are supported: IE11, latest Edge, latest Chrome, latest Firefox, latest Safari.
-Works with mobile versions too.
+也可以下载本仓库 [compose.yaml](compose.yaml)，在同目录执行：
 
-## Features
+```bash
+docker compose pull
+docker compose up -d
+```
 
-* Download
-* Upload
-* Ping
-* Jitter
-* IP Address, ISP, distance from server (optional)
-* Telemetry (optional)
-* Results sharing (optional)
-* Multiple Points of Test (optional)
-* Connection stability test with latency charting, loss tracking, threshold alerts, and CSV export
+**完整部署、局域网访问、NAS/容器平台设置、更新和故障排查：[部署文档](docs/DEPLOY.md)**。
 
-![Screenrecording of a running Speedtest](https://speedtest.fdossena.com/mpot_v7.gif)
+首版发布平台为 `linux/amd64`（Intel/AMD 64 位，Windows/macOS 使用 Linux 容器）。`1.0.0` 为固定版本，`latest` 跟随稳定发行版，`edge` 跟随 main 分支。
 
-## Server requirements
+## 本地修改与发布
 
-* A reasonably fast web server with Apache 2 (nginx, IIS also supported)
-* PHP 5.4 or newer (other backends also available)
-* MariaDB or MySQL database to store test results (optional, Microsoft SQL Server, PostgreSQL and SQLite also supported)
-* A fast! internet connection
+本地挂载源码预览见 [LOCAL_TEST.md](LOCAL_TEST.md)。使用正式 Dockerfile 构建：
 
-## Installation
+```bash
+docker build -t boke-speedtest:local .
+docker run -d --name boke-speedtest-dev -p 127.0.0.1:18090:8080 boke-speedtest:local
+```
 
-Assuming you have PHP and a web server installed, the installation steps are quite simple.
+GitHub Actions 在 main 分支更新时构建并验证容器，验证通过后发布 `edge` 和提交号标签；推送 `v1.0.0` 这类版本标签时发布对应镜像版本及 `latest`。自动化流程见 [.github/workflows/docker-publish.yml](.github/workflows/docker-publish.yml)。首次创建 GHCR 包后需将包的 Visibility 设为 Public（仓库公开并不自动令包公开）。
 
-1. Download the source code and extract it
-1. Copy the project files to your web server's shared folder (ie. `/var/www/html/speedtest` for Apache), keeping the layout as it is in the repository. The modern UI loads its assets from `frontend/`, so that directory is copied as a whole rather than unpacked.
-1. Optionally, copy the results folder too, and set up the database using the config file in it.
-1. Be sure your permissions allow read and execute access where needed.
-1. Visit YOURSITE/speedtest/index.html and voila!
+发布检查使用 `npm ci`、`npx playwright install chromium`、`npm run test:release`，针对 `http://127.0.0.1:18090` 上已启动的容器运行。它会执行短时本机测速、停止/重新测速和稳定性采样；结果用于功能验证，不代表互联网带宽。旧上游测试套件保留在 `tests/e2e/`，包含上游原始界面断言。
 
-### Installation Video
+## 来源与许可
 
-This video shows the installation process of a standalone LibreSpeed server: [Quick start installation guide for Debian 12](https://fdossena.com/?p=speedtest/quickstart_deb12.frag)
-
-More videos will be added later.
-
-## Android app
-
-A template to build an Android client for your LibreSpeed installation is available [here](https://github.com/librespeed/speedtest-android).
-
-## CLI client
-
-A command line client is available [here](https://github.com/librespeed/speedtest-cli).
-
-## .NET client
-
-A .NET client library is available in the [`LibreSpeed.NET`](https://github.com/Memphizzz/LibreSpeed.NET) repo ([NuGet](https://www.nuget.org/packages/LibreSpeed.NET)), maintained by [MemphiZ](https://github.com/Memphizzz).
-
-## Development
-
-If you want to contribute or develop with LibreSpeed, see [DEVELOPMENT.md](DEVELOPMENT.md) for information about using npm for development tasks, linting, and formatting.
-
-## Design switch
-
-LibreSpeed supports both the classic and modern UI. The root `index.html` acts as a lightweight switcher and redirects to `index-classic.html` or `index-modern.html` based on `config.json` (`useNewDesign`) or URL overrides (`?design=new` / `?design=old`). For architecture and deployment details (including Docker behavior), see [DESIGN_SWITCH.md](DESIGN_SWITCH.md).
-
-## Stability test
-
-LibreSpeed includes a standalone connection stability test at `stability.html`, linked from both the classic and modern interfaces. It repeatedly measures ping over a selected duration and reports current, average, minimum, maximum, jitter, and failed request percentage values with a live chart.
-
-The stability test can target the local LibreSpeed backend, one of the configured multiple points of test, or built-in external targets such as Google, Cloudflare, and Apple. It also supports optional latency threshold alerts and CSV export of the collected samples. Docker deployments copy `stability.html` and `stability_worker.js` into the web root and reuse the same server list configuration as the main UI.
-
-## Docker
-
-A docker image is available on [GitHub](https://github.com/librespeed/speedtest/pkgs/container/speedtest), check our [docker documentation](doc_docker.md) for more info about it.
-The image is built every week to include an updated version of the ipinfo-DB used for ISP detection. Also this ensures, that the latest security patches in PHP are installed. Therefore we recommend to use the `latest` image.
-
-## Go backend
-
-A Go implementation is available in the [`speedtest-go`](https://github.com/librespeed/speedtest-go) repo, maintained by [Maddie Zhan](https://github.com/maddie).
-
-## Rust backend
-
-A Rust implementation is available in the [`speedtest-rust`](https://github.com/librespeed/speedtest-rust) repo, maintained by [Sudo Dios](https://github.com/sudodios).
-
-## Node.js backend
-
-A partial Node.js implementation is available in the `node` branch, developed by [dunklesToast](https://github.com/dunklesToast). It's not recommended to use at the moment.
-
-## Donate
-
-[![Donate with Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/fdossena/donate)
-[Donate with PayPal](https://www.paypal.me/sineisochronic)
-
-## License
-
-Copyright (C) 2016-2024 Federico Dossena
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/lgpl>.
+源码沿用 LibreSpeed 的 **LGPL-3.0-or-later**，保留原作者声明。品牌图标、视频和图片有独立权利归属，见 [NOTICE.md](NOTICE.md) 与 [素材来源](frontend/images/boke/SOURCES.txt)。本项目不是波克官方产品。

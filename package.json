@@ -1,7 +1,7 @@
 {
-  "name": "librespeed-speedtest",
-  "version": "6.3.0",
-  "description": "LibreSpeed - A Free and Open Source speed test that you can host on your server(s)",
+  "name": "boke-speedtest",
+  "version": "1.0.0",
+  "description": "Boke-themed LibreSpeed network speed and stability test",
   "main": "speedtest.js",
   "scripts": {
     "test": "echo \"No automated tests configured yet\" && exit 0",
@@ -13,11 +13,12 @@
     "format:check": "prettier --check \"*.js\"",
     "validate": "npm run format:check && npm run lint",
     "docker:build": "docker build -t librespeed-speedtest .",
-    "docker:build-alpine": "docker build -t librespeed-speedtest:alpine -f Dockerfile.alpine ."
+    "docker:build-alpine": "docker build -t librespeed-speedtest:alpine -f Dockerfile.alpine .",
+    "test:release": "node tests/release-smoke.cjs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/librespeed/speedtest.git"
+    "url": "git+https://github.com/rumij/boke-speedtest.git"
   },
   "keywords": [
     "speedtest",
@@ -35,9 +36,9 @@
   "author": "Federico Dossena",
   "license": "LGPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/librespeed/speedtest/issues"
+    "url": "https://github.com/rumij/boke-speedtest/issues"
   },
-  "homepage": "https://github.com/librespeed/speedtest#readme",
+  "homepage": "https://github.com/rumij/boke-speedtest#readme",
   "devDependencies": {
     "@playwright/test": "^1.55.0",
     "eslint": "^8.57.0",

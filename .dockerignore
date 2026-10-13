@@ -1,0 +1,18 @@
+# Only runtime sources are copied by the Dockerfile.
+.git
+.github
+node_modules
+playwright-report
+test-results
+.env
+.env.*
+**/*.db
+**/*.db-shm
+**/*.db-wal
+db-dir
+**/*.log
+*.zip
+work
+outputs
+tests
+.logo

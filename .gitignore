@@ -8,3 +8,12 @@ test-results/
 results/speedtest_telemetry.db
 results/speedtest_telemetry.db-shm
 results/speedtest_telemetry.db-wal
+
+# Local credentials, runtime data and build/test artifacts
+.env
+.env.*
+!.env.example
+*.log
+*.zip
+work/
+outputs/
