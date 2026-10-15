@@ -1,0 +1,71 @@
+.risk-page { background: #f5f4ef; }
+.risk-page .site-header { position: relative; color: var(--ink); border-bottom: 1px solid #dfdfd6; padding-top: 22px; padding-bottom: 22px; }
+.risk-page .boke-logo { filter: none; width: 170px; }
+.risk-page .site-header nav { font-size: 15px; gap: 32px; }
+.risk-page .site-header nav a:hover { color: var(--brand-text); }
+.risk-main { width: min(90%, 1180px); margin: auto; }
+.risk-intro { display: flex; justify-content: space-between; align-items: center; gap: 35px; padding: 58px 0 15px; }
+.risk-intro .section-kicker { margin-bottom: 18px; font-size: 11px; letter-spacing: 2px; }
+.risk-intro h1 { margin: 0; font-size: clamp(30px, 4vw, 48px); line-height: 1.3; letter-spacing: -1px; }
+.risk-intro h1 span { display: block; font-size: 19px; font-weight: 400; color: #62716a; letter-spacing: 1px; margin-top: 17px; }
+.intro-copy { max-width: 650px; font-size: 14px; color: var(--muted); line-height: 1.8; }
+.intro-action { display: flex; flex-direction: column; align-items: center; gap: 12px; flex-shrink: 0; }
+.risk-primary { padding: 17px 25px; border-radius: 9px; border: 0; background: var(--red); color: white; font-weight: 700; min-width: 220px; }
+.risk-primary span { margin-left: 25px; font-size: 20px; }
+.risk-text-button { border: 0; background: transparent; color: #5d655e; text-decoration: underline; text-underline-offset: 4px; font-size: 13px; padding: 10px; }
+.risk-disclosure { margin: 0 0 25px; color: #765947; font-size: 12px; line-height: 1.7; }
+.risk-notice { background: #fff8e6; border: 1px solid #e9d7ab; border-radius: 9px; padding: 13px 18px; color: #73551c; font-size: 13px; line-height: 1.7; margin-bottom: 12px; }
+.demo-notice { background: #ebf2ff; border-color: #c2d4f4; color: #294b80; }
+[hidden] { display: none !important; }
+.risk-status { font-size: 13px; line-height: 1.8; min-height: 24px; margin: 13px 0; color: #59675f; }
+.risk-grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 20px; }
+.risk-card { background: #fffefa; border: 1px solid #dfdfd5; border-radius: 17px; padding: 26px; min-width: 0; }
+.card-heading { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.card-heading h2 { font-size: 17px; margin: 0; }
+.small-label { font-size: 11px; color: #647067; text-align: right; }
+.score-card { --score-color: #7d8780; --score-fill: 0%; }
+.score-card[data-level="low"] { --score-color: #27755e; }
+.score-card[data-level="medium"] { --score-color: #a87319; }
+.score-card[data-level="high"] { --score-color: #c63f32; }
+.score-orbit { width: 208px; height: 208px; border-radius: 50%; margin: 25px auto 18px; padding: 10px; background: conic-gradient(from 225deg, var(--score-color) var(--score-fill), #eaece4 0); }
+.score-orbit > div { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; background: #fffefa; border-radius: 50%; height: 100%; }
+#risk-score { font-family: Arial, sans-serif; font-size: 70px; letter-spacing: -3px; line-height: 1.1; color: var(--score-color); }
+#risk-label { font-size: 13px; color: var(--score-color); }
+.score-scale { display: flex; justify-content: space-between; max-width: 290px; margin: auto; font-size: 10px; color: #757e75; }
+.score-explanation { margin: 21px 0 18px; font-size: 12px; color: #607068; line-height: 1.8; text-align: center; }
+.score-meta { display: grid; grid-template-columns: 75px minmax(0, 1fr); gap: 10px; padding-top: 16px; border-top: 1px solid #e8e9e0; font-size: 11px; color: #667067; }
+.score-meta strong { text-align: right; overflow-wrap: anywhere; font-weight: 500; color: #33463d; }
+.ip-address { font: 600 clamp(21px, 2.7vw, 32px)/1.4 Consolas, monospace; margin: 24px 0 10px; overflow-wrap: anywhere; color: #263e32; }
+.muted { font-size: 12px; color: #657168; line-height: 1.8; margin: 10px 0 0; overflow-wrap: anywhere; }
+.ip-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; border-top: 1px solid #e8e9e0; margin: 23px 0 18px; padding-top: 20px; }
+.ip-facts dt { font-size: 11px; color: #6b776d; margin-bottom: 8px; }
+.ip-facts dd { font-size: 14px; margin: 0; overflow-wrap: anywhere; }
+.region-note { font-size: 11px; line-height: 1.8; padding: 12px; background: #f2f4ed; border-radius: 7px; color: #616b5d; }
+.region-note a, .risk-footer a { text-decoration: underline; text-underline-offset: 3px; }
+.manual-query { border-top: 1px solid #e8e9e0; margin-top: 17px; padding-top: 17px; font-size: 12px; }
+.manual-query summary { cursor: pointer; color: #425746; }
+.manual-query form { margin-top: 18px; }
+.manual-query label { display: block; color: #5e6d61; margin-bottom: 8px; }
+.input-row { display: flex; gap: 8px; }
+.input-row input { min-width: 0; flex: 1; width: 100%; border: 1px solid #cbd3c7; border-radius: 6px; padding: 11px; background: white; font: inherit; }
+.input-row button { padding: 10px 20px; border: 0; border-radius: 6px; background: #254536; color: white; }
+.input-row input:focus-visible { outline: 2px solid #49765d; outline-offset: 2px; }
+.signals-list { margin: 15px 0 0; }
+.signals-list > div { display: flex; justify-content: space-between; gap: 18px; padding: 12px 0; border-bottom: 1px solid #efeee7; font-size: 13px; }
+.signals-list dd { margin: 0; font-size: 11px; padding: 3px 9px; border-radius: 4px; background: #f1f2ec; color: #6c756a; }
+.signals-list dd[data-signal="true"] { background: #fbeae3; color: #a53f26; }
+.signals-list dd[data-signal="false"] { background: #eaf3eb; color: #32674a; }
+.deduction { border-bottom: 1px solid #efeee7; padding: 18px 0; }
+.deduction > div { display: flex; justify-content: space-between; gap: 15px; font-size: 14px; }
+.deduction strong { color: #a5442c; white-space: nowrap; }
+.deduction p { margin: 8px 0 0; font-size: 12px; line-height: 1.8; color: #667366; }
+.risk-rules { display: grid; grid-template-columns: 1fr 1.3fr; gap: 70px; padding: 60px 0; }
+.risk-rules .section-kicker { font-size: 10px; margin: 0 0 16px; }
+.risk-rules h2 { font-size: 25px; line-height: 1.5; margin: 0 0 20px; }
+.risk-rules p { font-size: 12px; line-height: 1.9; color: #626f62; }
+.rule-list p { padding: 0 0 14px; margin: 0 0 14px; border-bottom: 1px solid #dedfd4; }
+.rule-list strong { color: #364b38; }
+.risk-footer { border-top: 1px solid #d7d9ce; display: flex; gap: 25px; flex-wrap: wrap; justify-content: space-between; font-size: 11px; color: #63705e; padding: 25px 0 35px; }
+.risk-page button:disabled { opacity: .6; }
+@media(max-width: 800px) { .risk-intro { align-items: flex-start; flex-direction: column; gap: 12px; padding-top: 36px; } .intro-action { flex-direction: row; flex-wrap: wrap; } .risk-grid { grid-template-columns: 1fr; } .risk-rules { grid-template-columns: 1fr; gap: 15px; padding: 40px 0 20px; } .risk-page .site-header { gap: 16px; } .risk-page .site-header nav { gap: 20px; font-size: 13px; } }
+@media(max-width: 420px) { .risk-card { padding: 21px; } .risk-main { width: 90%; } .risk-page .site-header { padding-left: 5%; padding-right: 5%; } .risk-intro h1 span { font-size: 17px; } .risk-primary { min-width: 190px; padding: 15px; } .intro-action { gap: 5px; } .risk-page .site-header nav { gap: 17px; } .ip-facts { gap: 20px 12px; } }

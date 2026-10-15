@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="查看浏览器访问 Claude 的出口 IP，并用公开规则评估 IP 风险信号。">
+  <meta name="referrer" content="no-referrer">
+  <title>Claude 信任评分 · 波克网络检测</title>
+  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="styling/boke.css">
+  <link rel="stylesheet" href="styling/claude-risk.css">
+  <script src="javascript/claude-risk.js" defer></script>
+</head>
+<body class="risk-page">
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="返回波克网络测速"><img class="boke-logo" src="images/boke/logo.png" width="220" height="52" alt="波克 BOKE"></a>
+    <nav aria-label="主导航"><a href="../index.html">网络测速</a><a href="../stability.html">稳定性测试</a><a class="nav-current" href="claude.html" aria-current="page">Claude 评分</a></nav>
+  </header>
+  <main class="risk-main">
+    <section class="risk-intro" aria-labelledby="risk-title">
+      <div><p class="section-kicker">BOKE / CONNECTION INSIGHT</p><h1 id="risk-title">Claude 信任评分<span>看见分数，也看见依据。</span></h1><p class="intro-copy">从当前浏览器识别访问 Claude 的出口，查看 IP 的网络属性与风险标记。</p></div>
+      <div class="intro-action"><button id="risk-start" class="risk-primary" type="button">检测 Claude 出口 <span aria-hidden="true">↗</span></button><button id="risk-demo" class="risk-text-button" type="button">先看评分示例</button></div>
+    </section>
+    <p class="risk-disclosure">本站参考评分 · 非 Anthropic 官方评分 · 不代表登录、对话或账号安全保证</p>
+    <div id="risk-config" class="risk-notice" role="status">正在检查评分服务…</div>
+    <div id="risk-demo-notice" class="risk-notice demo-notice" hidden><strong>演示模式</strong>　以下为虚构示例，不是你当前网络的检测结果。</div>
+    <p id="risk-status" class="risk-status" role="status" aria-live="polite">点击检测后，才会访问 Claude 出口回显和 IP 风险数据源。</p>
+    <div class="risk-grid" id="risk-results" aria-busy="false">
+      <section class="risk-card score-card" aria-labelledby="score-heading" data-level="unknown">
+        <div class="card-heading"><h2 id="score-heading">IP 风险参考分</h2><span class="small-label">满分 100</span></div>
+        <div class="score-orbit"><div><strong id="risk-score">—</strong><span id="risk-label">等待检测</span></div></div>
+        <div class="score-scale" aria-hidden="true"><span>风险信号较多</span><span>风险信号较少</span></div>
+        <p id="risk-coverage" class="score-explanation">5 项关键数据齐全后才给分，未知不按安全处理。</p>
+        <div class="score-meta"><span>规则版本</span><strong>boke-ip-v1</strong><span>数据来源</span><strong id="risk-provider">尚未查询</strong><span>查询时间</span><strong id="risk-time">—</strong></div>
+      </section>
+      <section class="risk-card ip-card" aria-labelledby="ip-heading">
+        <div class="card-heading"><h2 id="ip-heading">本次评估的 IP</h2><span id="risk-source" class="small-label">等待识别</span></div>
+        <p id="risk-ip" class="ip-address">—</p><p id="risk-source-note" class="muted">自动检测以 claude.ai 的回显为准；不会用本站服务器的出口替代。</p>
+        <dl class="ip-facts"><div><dt>国家 / 地区</dt><dd id="risk-country">待检测</dd></div><div><dt>城市</dt><dd id="risk-city">待检测</dd></div><div><dt>ASN</dt><dd id="risk-asn">待检测</dd></div><div><dt>网络组织</dt><dd id="risk-organization">待检测</dd></div></dl>
+        <p class="region-note">地区支持情况与 IP 信誉分开判断。<a href="https://www.anthropic.com/legal/supported-regions" target="_blank" rel="noopener noreferrer">查看 Claude 官方支持地区 ↗</a></p>
+        <details class="manual-query"><summary>自动识别失败？手动查询一个公网 IP</summary><form id="risk-form"><label for="risk-input">公网 IPv4 / IPv6</label><div class="input-row"><input id="risk-input" type="text" maxlength="45" placeholder="输入待查 IP 地址" autocomplete="off" spellcheck="false" required><button id="risk-submit" type="submit">查询</button></div><p class="muted">手动查询只评估这个地址，不会将它标记为已验证的 Claude 出口。</p></form></details>
+      </section>
+      <section class="risk-card signals-card" aria-labelledby="signals-heading"><div class="card-heading"><h2 id="signals-heading">风险信号</h2><span class="small-label">来自 IP 数据库</span></div><dl id="risk-signals" class="signals-list"></dl><p class="muted">“未命中”表示数据源未标记，不保证不存在。爬虫标记仅供参考，不扣分。</p></section>
+      <section class="risk-card deductions-card" aria-labelledby="deductions-heading"><div class="card-heading"><h2 id="deductions-heading">为什么是这个分数？</h2><span class="small-label">逐项说明</span></div><div id="risk-deductions"><p class="muted">检测完成后，显示本轮命中的规则和扣分。</p></div></section>
+    </div>
+    <section class="risk-rules" aria-labelledby="rules-heading"><div><p class="section-kicker">READ THE SIGNALS</p><h2 id="rules-heading">分数有边界，依据要透明。</h2><p>这些权重是本站设计的启发式规则，尚未用 Claude 账号结果校准。它衡量所查询的 IP 风险信号，不预测封号概率。</p></div><div class="rule-list"><p><strong>100 分起算</strong>　匿名网络取最高扣分：Tor 60、公开代理 35、VPN 20；IP 滥用标记扣 25；机房标记扣 15。最低 0 分。</p><p><strong>未知就留空</strong>　5 项必需标记任何一项缺失，都不显示总分。时区、语言、Canvas 指纹和地区不参与扣分。</p><p><strong>一次请求的视角</strong>　自动识别只代表当前浏览器访问 claude.ai 的这次出口，不能代表 Claude Code、API 或其他程序的线路。</p><p><strong>最小数据使用</strong>　检测会将待查 IP 发送给本站及 ipapi.is；缓存有效期 1 小时，过期记录在下一次查询时清理。不采集账号、Cookie 或浏览器指纹；反向代理和数据源可能各自保留访问记录。</p></div></section>
+    <footer class="risk-footer"><span>BOKE · NETWORK INSIGHT</span><a href="https://ipapi.is/free-tier.html" target="_blank" rel="noopener noreferrer">数据源与免费额度 ↗</a><a href="../index.html">返回网络测速 ↗</a></footer>
+  </main>
+</body>
+</html>

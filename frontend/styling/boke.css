@@ -9,7 +9,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--red); outline-o
 .site-header { position: absolute; inset: 0 0 auto; z-index: 5; display: flex; align-items: center; justify-content: space-between; padding: 28px max(5%, calc((100% - var(--content-width)) / 2)); color: white; gap: 30px; }
 .brand { display: inline-flex; align-items: center; flex-shrink: 0; }
 .boke-logo { display: block; width: 200px; height: auto; aspect-ratio: 220 / 52; object-fit: contain; filter: brightness(0) invert(1); }
-.site-header nav { display: flex; gap: 46px; align-items: center; font-size: 17px; font-weight: 600; }
+.site-header nav { display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: center; font-size: 17px; font-weight: 600; }
 .site-header nav a { position: relative; padding: 13px 0; }
 .site-header nav a:hover { color: #ffddd9; }
 .nav-current::after { content: ""; position: absolute; width: 24px; height: 3px; border-radius: 4px; background: var(--brand-highlight); bottom: 0; left: calc(50% - 12px); }
@@ -190,6 +190,7 @@ dialog button { padding: 12px 25px; background: var(--red); color: white; border
 }
 @media (max-width: 600px) {
   .hero-content { padding-top: 167px; gap: 30px; }
+  .home-page .site-header nav { font-size: 13px; gap: 0 16px; }
   .hero-copy h1 { font-size: clamp(64px, 17vw, 88px); margin-bottom: 20px; }
   .hero-copy h1 > span { display: block; }
   .hero-copy h2 { font-size: 25px; }
@@ -213,6 +214,7 @@ dialog button { padding: 12px 25px; background: var(--red); color: white; border
   #selected-server { font-size: 14px; }
 }
 @media (max-width: 360px) {
+  .home-page .site-header nav { font-size: 12px; gap: 0 10px; }
   .hero-copy h2 { font-size: 22px; }
   .latency-metric { padding: 11px; }
   .latency-metric h3 small { display: block; margin: 3px 0 0; }

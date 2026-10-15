@@ -1,0 +1,19 @@
+# Local build with the optional IP-risk data source. Never put the key in HTML/JS.
+# Usage: docker compose -f compose.yaml -f compose.claude.yaml up -d --build
+services:
+  speedtest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: boke-speedtest:claude-local
+    environment:
+      BOKE_IPAPI_KEY: "${BOKE_IPAPI_KEY:-}"
+      BOKE_RISK_DAILY_LIMIT: "${BOKE_RISK_DAILY_LIMIT:-900}"
+      BOKE_RISK_STATE_DIR: /var/lib/boke-risk
+    volumes:
+      - claude-risk-state:/var/lib/boke-risk
+    # Apache runs as www-data. Prepare only the dedicated persistent state dir.
+    command: ["bash", "-c", "mkdir -p /var/lib/boke-risk && chown www-data:www-data /var/lib/boke-risk && chmod 700 /var/lib/boke-risk && exec bash /entrypoint.sh"]
+
+volumes:
+  claude-risk-state:
